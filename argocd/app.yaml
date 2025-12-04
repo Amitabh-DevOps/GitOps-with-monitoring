@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/nfroze/Project-9-GitOps-ArgoCD-Monitoring
+    repoURL: https://github.com/Amitabh-DevOps/GitOps-with-monitoring.git
     targetRevision: HEAD
     path: manifests
   destination:

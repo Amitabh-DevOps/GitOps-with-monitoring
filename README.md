@@ -1,4 +1,4 @@
-# Project 9: GitOps Monitoring
+# GitOps with Monitoring
 
 GitOps workflow with ArgoCD on AWS EKS. Prometheus and Grafana deployment via Helm. Automatic synchronisation from Git repository.
 
