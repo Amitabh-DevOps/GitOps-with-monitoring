@@ -1,0 +1,18 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+*.tfplan
+
+# MacOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Credentials
+*.pem
+kubeconfig
