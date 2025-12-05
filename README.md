@@ -2,7 +2,7 @@
 
 A complete GitOps implementation using ArgoCD on AWS EKS with Prometheus and Grafana monitoring. This project demonstrates automated deployment, continuous synchronization from Git, and comprehensive cluster monitoring.
 
-## 🚀 Technologies
+## Technologies
 
 - **Cloud Platform**: AWS EKS (Elastic Kubernetes Service)
 - **Infrastructure as Code**: Terraform
@@ -14,7 +14,7 @@ A complete GitOps implementation using ArgoCD on AWS EKS with Prometheus and Gra
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Architecture Overview](#architecture-overview)
 - [Prerequisites](#prerequisites)
@@ -33,7 +33,7 @@ A complete GitOps implementation using ArgoCD on AWS EKS with Prometheus and Gra
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 This project implements a complete GitOps workflow:
 
@@ -44,7 +44,7 @@ This project implements a complete GitOps workflow:
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 Before starting, ensure you have:
 
@@ -56,7 +56,7 @@ Before starting, ensure you have:
 
 ---
 
-## 📖 Step-by-Step Deployment Guide
+## Step-by-Step Deployment Guide
 
 ### Step 1: EC2 Instance Setup
 
@@ -358,7 +358,7 @@ This creates ServiceMonitors for ArgoCD metrics in Prometheus.
 
 ---
 
-## 🌐 Accessing the Applications
+## Accessing the Applications
 
 After deployment, you can access:
 
@@ -375,7 +375,7 @@ kubectl get svc -n webapp
 
 ---
 
-## 🧹 Cleanup
+## Cleanup
 
 To avoid AWS charges, delete all resources when done:
 
@@ -403,7 +403,7 @@ terraform destroy --auto-approve
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Issue 1: Terraform Destroy Hangs
 
@@ -454,7 +454,7 @@ kubectl describe pod <pod-name> -n <namespace>
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### ArgoCD Dashboard
 ![ArgoCD dashboard](images/1.png)
