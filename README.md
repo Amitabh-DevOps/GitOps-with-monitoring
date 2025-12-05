@@ -2,6 +2,8 @@
 
 A complete GitOps implementation using ArgoCD on AWS EKS with Prometheus and Grafana monitoring. This project demonstrates automated deployment, continuous synchronization from Git, and comprehensive cluster monitoring.
 
+![webapp](images/10.png)
+
 ## Technologies
 
 - **Cloud Platform**: AWS EKS (Elastic Kubernetes Service)
@@ -62,7 +64,7 @@ Before starting, ensure you have:
 
 1. **Launch an EC2 Instance**:
    - AMI: Ubuntu 22.04 LTS
-   - Instance Type: `t3.medium` or larger (minimum 2 vCPU, 4GB RAM)
+   - Instance Type: `t2.large` or larger (minimum 2 vCPU, 4GB RAM)
    - Storage: 20GB or more
    - Security Group: Allow SSH (port 22) from your IP
    - Create or use an existing key pair for SSH access
@@ -103,8 +105,10 @@ docker --version
 # Download and install Terraform
 wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 
+# Add HashiCorp repository to your system
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 
+# Update package index and install Terraform
 sudo apt update && sudo apt install terraform
 
 # Verify Terraform installation
@@ -130,6 +134,18 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Verify kubectl installation
 kubectl version --client
+```
+
+#### 2.5 Install eksctl
+```bash
+# Install eksctl
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+
+# Move eksctl to /usr/local/bin
+sudo mv /tmp/eksctl /usr/local/bin
+
+# Verify eksctl installation
+eksctl version
 ```
 
 #### 2.6 Install Helm (Optional)
@@ -235,6 +251,18 @@ kubectl get nodes
 
 You should see 2 nodes in `Ready` state.
 
+- AWS EKS Cluster
+    
+    ![AWS EKS cluster](images/14.png)
+
+- AWS EKS Cluster & Nodes
+    
+    ![AWS EKS cluster & nodes](images/18.png)
+
+- Pods & Services in `argocd` Namespace
+    
+    ![Pods & Service in argocd namespace](images/15.png)
+
 ---
 
 ### Step 5: Setup ArgoCD
@@ -297,7 +325,16 @@ kubectl apply -f monitoring.yaml
    - `webapp` - Your Node.js application
    - `monitoring` - Prometheus & Grafana stack
 
+        ![ArgoCD dashboard](images/1.png)
+
 3. Click on each application to see the deployment status
+
+    - `webapp`:
+        ![ArgoCD webapp](images/3.png)
+
+    - `monitoring`:
+        ![ArgoCD monitoring](images/2.png)
+
 4. Wait for both applications to show "Healthy" and "Synced"
 
 #### 6.3 Verify Pods
@@ -309,18 +346,26 @@ kubectl get pods -n webapp
 kubectl get pods -n monitoring
 ```
 
+- Pods & Services -n webapp
+
+    ![Pods & Services in webapp namespace](images/16.png)
+
+- Pods & Services -n monitoring
+
+    ![Pods & Services in monitoring namespace](images/17.png)
+
 ---
 
 ### Step 7: Setup Grafana Dashboards
 
 #### 7.1 Get Grafana LoadBalancer URL
 ```bash
-kubectl get svc -n monitoring kube-prometheus-stack-grafana
+kubectl get svc -n monitoring monitoring-grafana
 ```
 
-#### 7.2 Get Grafana Admin Password
+#### 7.2 Get Grafana Admin Password or use: admin123
 ```bash
-kubectl get secret -n monitoring kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d && echo
+kubectl get secret -n monitoring monitoring-grafana -o jsonpath="{.data.admin-password}" | base64 -d && echo
 ```
 
 #### 7.3 Access Grafana UI
@@ -331,7 +376,7 @@ http://<GRAFANA-LOADBALANCER-URL>
 
 **Login Credentials**:
 - Username: `admin`
-- Password: (from step 7.2)
+- Password: `admin123`
 
 #### 7.4 Setup ArgoCD Monitoring
 ```bash
@@ -344,18 +389,37 @@ This creates ServiceMonitors for ArgoCD metrics in Prometheus.
 #### 7.5 Import Dashboards
 
 **Dashboard 1: ArgoCD Monitoring**
-1. In Grafana, click the "+" icon → "Import"
+1. In Grafana, Go to Dashboards and click the "New" button → "Import"
 2. Enter Dashboard ID: `14584`
 3. Click "Load"
 4. Select Prometheus data source: `Prometheus`
 5. Click "Import"
+6. You will see the ArgoCD monitoring metrics:
+    
+    ![ArgoCD monitoring](images/5.png)
 
-**Dashboard 2: ArgoCD Operational Overview**
-1. Click the "+" icon → "Import"
+**Dashboard 2: ArgoCD Operationa/Overview**
+1. In Grafana, Go to Dashboards and click the "New" button → "Import"
 2. Enter Dashboard ID: `19993`
 3. Click "Load"
 4. Select Prometheus data source: `Prometheus`
 5. Click "Import"
+6. You will see the ArgoCD operationa/overview metrics:
+    
+    ![ArgoCD monitoring](images/6.png)
+
+    ![ArgoCD monitoring](images/7.png)
+
+    ![ArgoCD monitoring](images/8.png)
+
+    ![ArgoCD monitoring](images/9.png)
+
+**Dashboard 3: Kuberenetes/Compute Resources/ Cluster Usage**
+1. In Grafana, Go to Dashboards → General
+2. Select `Kubernetes / Compute Resources / Cluster` from the list
+3. You will see the cluster usage metrics:
+    
+    ![Grafana cluster dashboard](images/4.png)
 
 ---
 
@@ -374,6 +438,16 @@ To get the Web App LoadBalancer URL:
 kubectl get svc -n webapp
 ```
 
+- Open that Web App LoadBalancer URL in your browser:
+
+    ![webapp](images/10.png)
+
+    ![webapp](images/11.png)
+
+    ![webapp](images/12.png)
+
+    ![webapp](images/13.png)
+
 ---
 
 ## Cleanup
@@ -386,7 +460,7 @@ To avoid AWS charges, delete all resources when done:
 kubectl delete svc argocd-server -n argocd
 
 # Delete Grafana LoadBalancer
-kubectl patch svc kube-prometheus-stack-grafana -n monitoring -p '{"spec": {"type": "ClusterIP"}}'
+kubectl patch svc monitoring-grafana -n monitoring -p '{"spec": {"type": "ClusterIP"}}'
 
 # Delete any LoadBalancers in webapp namespace
 kubectl delete svc -n webapp --all
@@ -452,58 +526,6 @@ kubectl describe pod <pod-name> -n <namespace>
 1. Wait 2-3 minutes for LoadBalancer to be fully provisioned
 2. Check AWS Console → EC2 → Load Balancers for status
 3. Verify security groups allow inbound traffic
-
----
-
-## Screenshots
-
-### ArgoCD Dashboard
-![ArgoCD dashboard](images/1.png)
-
-### ArgoCD Monitoring Application
-![ArgoCD monitoring application](images/2.png)
-
-### ArgoCD WebApp Application
-![ArgoCD webapp application](images/3.png)
-
-### Grafana Cluster Dashboard
-![Grafana cluster dashboard](images/4.png)
-
-### ArgoCD Monitoring Metrics
-![ArgoCD monitoring](images/5.png)
-
-### ArgoCD Operational Overview
-![ArgoCD monitoring](images/6.png)
-
-![ArgoCD monitoring](images/7.png)
-
-![ArgoCD monitoring](images/8.png)
-
-![ArgoCD monitoring](images/9.png)
-
-### Deployed Application
-![Deployed application](images/10.png)
-
-![Deployed application](images/11.png)
-
-![Deployed application](images/12.png)
-
-![Deployed application](images/13.png)
-
-### AWS EKS Cluster
-![AWS EKS cluster](images/14.png)
-
-### AWS EKS Cluster & Nodes
-![AWS EKS cluster & nodes](images/18.png)
-
-### Pods & Services in `argocd` Namespace
-![Pods & Service in argocd namespace](images/15.png)
-
-### Pods & Services in `webapp` Namespace
-![Pods & Services in webapp namespace](images/16.png)
-
-### Pods & Services in `monitoring` Namespace
-![Pods & Services in monitoring namespace](images/17.png)
 
 ---
 
