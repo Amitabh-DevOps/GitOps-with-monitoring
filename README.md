@@ -8,18 +8,45 @@ AWS EKS • Terraform • ArgoCD • Prometheus • Grafana • Helm • Kuberne
 
 ## Screenshots
 
-![ArgoCD dashboard](screenshots/1.png)
+- ArgoCD dashboard
 
-![ArgoCD monitoring application](screenshots/2.png)
+    ![ArgoCD dashboard](images/1.png)
 
-![ArgoCD webapp application](screenshots/3.png)
+- ArgoCD monitoring application
 
-![Grafana cluster dashboard](screenshots/4.png)
+    ![ArgoCD monitoring application](images/2.png)
 
-![Grafana namespace view](screenshots/5.png)
+- ArgoCD webapp application
 
-![Deployed application](screenshots/6.png)
+    ![ArgoCD webapp application](images/3.png)
 
-![Monitoring pods](screenshots/7.png)
+- Grafana cluster dashboard
 
-![AWS EKS cluster](screenshots/8.png)
+    ![Grafana cluster dashboard](images/4.png)
+
+- ArgoCD monitoring
+
+    ![ArgoCD monitoring](images/5.png)
+
+- ArgoCD monitoring operational overview
+
+    ![ArgoCD monitoring](images/6.png)
+
+    ![ArgoCD monitoring](images/7.png)
+
+    ![ArgoCD monitoring](images/8.png)
+
+    ![ArgoCD monitoring](images/9.png)
+
+- Deployed application
+
+    ![Deployed application](images/10.png)
+    ![Deployed application](images/11.png)
+    ![Deployed application](images/12.png)
+    ![Deployed application](images/13.png)
+
+- Monitoring pods
+![Monitoring pods](images/14.png)
+
+- AWS EKS cluster
+![AWS EKS cluster](images/8.png)
