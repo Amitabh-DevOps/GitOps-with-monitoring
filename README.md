@@ -41,12 +41,29 @@ AWS EKS • Terraform • ArgoCD • Prometheus • Grafana • Helm • Kuberne
 - Deployed application
 
     ![Deployed application](images/10.png)
+
     ![Deployed application](images/11.png)
+
     ![Deployed application](images/12.png)
+
     ![Deployed application](images/13.png)
 
-- Monitoring pods
-![Monitoring pods](images/14.png)
-
 - AWS EKS cluster
-![AWS EKS cluster](images/8.png)
+    
+    ![AWS EKS cluster](images/14.png)
+
+- AWS EKS cluster & nodes
+    
+    ![AWS EKS cluster & nodes](images/18.png)
+
+- Pods & Services in `argocd` namespace
+    
+    ![Pods & Service in `argocd` namespace](images/15.png)
+
+- Pods & Services in `webapp` namespace
+    
+    ![Pods & Services in `webapp` namespace](images/16.png)
+
+- Pods & Services in `monitoring` namespace
+    
+    ![Pods & Services in `monitoring` namespace](images/17.png)
