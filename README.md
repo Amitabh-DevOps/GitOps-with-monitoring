@@ -101,11 +101,11 @@ docker --version
 #### 2.3 Install Terraform
 ```bash
 # Download and install Terraform
-wget https://releases.hashicorp.com/terraform/1.6.0/terraform_1.6.0_linux_amd64.zip
-sudo apt install -y unzip
-unzip terraform_1.6.0_linux_amd64.zip
-sudo mv terraform /usr/local/bin/
-rm terraform_1.6.0_linux_amd64.zip
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+sudo apt update && sudo apt install terraform
 
 # Verify Terraform installation
 terraform --version
@@ -114,7 +114,7 @@ terraform --version
 #### 2.4 Install AWS CLI
 ```bash
 # Install AWS CLI
-sudo apt install -y awscli
+sudo snap install aws-cli --classic
 
 # Verify AWS CLI installation
 aws --version
@@ -127,13 +127,12 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 
 # Install kubectl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-rm kubectl
 
 # Verify kubectl installation
 kubectl version --client
 ```
 
-#### 2.6 Install Helm
+#### 2.6 Install Helm (Optional)
 ```bash
 # Install Helm
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
@@ -143,9 +142,11 @@ helm version
 ```
 
 #### 2.7 Configure AWS CLI
+
 ```bash
 aws configure
 ```
+
 Enter your AWS credentials:
 - AWS Access Key ID: `<your-access-key>`
 - AWS Secret Access Key: `<your-secret-key>`
