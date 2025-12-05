@@ -553,7 +553,7 @@ This project is open source and available under the MIT License.
 
 ## Author
 
-**Amitabh**
+**Amitabh Soni**
 - GitHub: [@Amitabh-DevOps](https://github.com/Amitabh-DevOps)
 
 ---
