@@ -342,14 +342,14 @@ This creates ServiceMonitors for ArgoCD metrics in Prometheus.
 
 #### 7.5 Import Dashboards
 
-**Dashboard 1: Kubernetes Cluster Monitoring**
+**Dashboard 1: ArgoCD Monitoring**
 1. In Grafana, click the "+" icon → "Import"
 2. Enter Dashboard ID: `14584`
 3. Click "Load"
 4. Select Prometheus data source: `Prometheus`
 5. Click "Import"
 
-**Dashboard 2: Kubernetes Compute Resources / Cluster**
+**Dashboard 2: ArgoCD Operational Overview**
 1. Click the "+" icon → "Import"
 2. Enter Dashboard ID: `19993`
 3. Click "Load"
