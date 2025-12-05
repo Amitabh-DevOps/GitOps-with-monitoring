@@ -330,9 +330,11 @@ kubectl apply -f monitoring.yaml
 3. Click on each application to see the deployment status
 
     - `webapp`:
+
         ![ArgoCD webapp](images/3.png)
 
     - `monitoring`:
+
         ![ArgoCD monitoring](images/2.png)
 
 4. Wait for both applications to show "Healthy" and "Synced"
@@ -529,7 +531,7 @@ kubectl describe pod <pod-name> -n <namespace>
 
 ---
 
-## 📝 Notes
+## Notes
 
 - **Cost**: Running this setup will incur AWS charges (approximately $2-3/day for the EKS cluster and EC2 instances)
 - **Security**: This is a demo setup. For production, implement proper security measures (private subnets, network policies, RBAC, etc.)
@@ -537,25 +539,25 @@ kubectl describe pod <pod-name> -n <namespace>
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-## 📄 License
+## License
 
 This project is open source and available under the MIT License.
 
 ---
 
-## 👤 Author
+## Author
 
 **Amitabh**
 - GitHub: [@Amitabh-DevOps](https://github.com/Amitabh-DevOps)
 
 ---
 
-## ⭐ Show Your Support
+## Show Your Support
 
 Give a ⭐️ if this project helped you!
